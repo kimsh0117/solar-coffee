@@ -6,6 +6,6 @@ REPO_NAME ?= SolarCoffee
 .PHONY: migrations db
 
 migrations:
-	cd ./SolarCoffee.Data && dotnet ef --startup-project ../SolarCoffee.Web/ migrations add $(mname) & cd ..
-db: 
-	cd ./SolarCoffee.Data && dotnet ef --startup-project ../SolarCoffee.Web/ database update && cd .. 
+	cd ./SolarCoffee.Data && dotnet ef --startup-project ../SolarCoffee.Web/ migrations add $(mname) && cd ..
+db:
+	cd ./SolarCoffee.Data && dotnet ef --startup-project ../SOlarCoffee.Web/ database update && cd ..

@@ -10,7 +10,7 @@ using SolarCoffee.Data;
 namespace SolarCoffee.Data.Migrations
 {
     [DbContext(typeof(SolarDbContext))]
-    [Migration("20210304134545_InitialMigration")]
+    [Migration("20210304195117_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -286,6 +286,144 @@ namespace SolarCoffee.Data.Migrations
                     b.ToTable("CustomersAddresses");
                 });
 
+            modelBuilder.Entity("SolarCoffee.Data.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsTaxable")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying(64)")
+                        .HasMaxLength(64);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("SolarCoffee.Data.Models.ProductInventory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("IdealQuantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantityOnHand")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductInventories");
+                });
+
+            modelBuilder.Entity("SolarCoffee.Data.Models.ProductInventorySnapshot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantityOnHand")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("SnapshotTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductInventorySnapshots");
+                });
+
+            modelBuilder.Entity("SolarCoffee.Data.Models.SalesOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("SalesOrders");
+                });
+
+            modelBuilder.Entity("SolarCoffee.Data.Models.SalesOrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SalesOrderId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SalesOrderId");
+
+                    b.ToTable("SalesOrderItems");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -342,6 +480,38 @@ namespace SolarCoffee.Data.Migrations
                     b.HasOne("SolarCoffee.Data.Models.CustomerAddress", "PrimaryAddress")
                         .WithMany()
                         .HasForeignKey("PrimaryAddressId");
+                });
+
+            modelBuilder.Entity("SolarCoffee.Data.Models.ProductInventory", b =>
+                {
+                    b.HasOne("SolarCoffee.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("SolarCoffee.Data.Models.ProductInventorySnapshot", b =>
+                {
+                    b.HasOne("SolarCoffee.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("SolarCoffee.Data.Models.SalesOrder", b =>
+                {
+                    b.HasOne("SolarCoffee.Data.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+                });
+
+            modelBuilder.Entity("SolarCoffee.Data.Models.SalesOrderItem", b =>
+                {
+                    b.HasOne("SolarCoffee.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SolarCoffee.Data.Models.SalesOrder", null)
+                        .WithMany("SalesOrderItems")
+                        .HasForeignKey("SalesOrderId");
                 });
 #pragma warning restore 612, 618
         }

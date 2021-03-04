@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SolarCoffee.Data;
+using SolarCoffee.Services.Product;
 
 namespace SolarCoffee.Web
 {
@@ -35,6 +36,8 @@ namespace SolarCoffee.Web
               opts.EnableDetailedErrors();
               opts.UseNpgsql(Configuration.GetConnectionString("solar.dev"));
             });
+            services.AddTransient<IProductService, ProductService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SolarCoffee.Web", Version = "v1" });
