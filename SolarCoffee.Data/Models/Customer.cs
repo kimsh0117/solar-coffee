@@ -1,9 +1,7 @@
 using System;
 
-namespace SolarCoffee.Data.Models
-{
-  public class Customer
-  {
+namespace SolarCoffee.Data.Models {
+  public class Customer {
     public int Id { get; set; }
     public DateTime CreatedOn { get; set; }
     public DateTime UpdatedOn { get; set; }
