@@ -3,8 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SolarCoffee.Data.Models
 {
-  public class CustomerAddress
-  {
+  public class CustomerAddress {
     public int Id { get; set; }
     public DateTime CreatedOn { get; set; }
     public DateTime UpdatedOn { get; set; }
