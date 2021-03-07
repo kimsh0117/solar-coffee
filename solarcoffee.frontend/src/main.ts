@@ -5,6 +5,10 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
+Vue.filter("price", (number: number) =>
+  isNaN(number) ? "-" : "$ " + number.toFixed(2)
+);
+
 new Vue({
   router,
   store,
