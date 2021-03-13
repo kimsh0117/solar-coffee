@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Inventory from "@/views/Inventory.vue";
-import Customers from "@/views/Customers.vue";
+import { Inventory, Customers, Orders, CreateInvoice } from "@/views";
+
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -19,12 +19,17 @@ const routes: Array<RouteConfig> = [
     path: "/customers",
     name: "customers",
     component: Customers
+  },
+  {
+    path: "/orders",
+    name: "order",
+    component: Orders
+  },
+  {
+    path: "/invoice/new",
+    name: "create-invoice",
+    component: CreateInvoice
   }
-  // {
-  //   path: "/",
-  //   name: "Home",
-  //   component: Home
-  // },
   // {
   //   path: "/about",
   //   name: "About",

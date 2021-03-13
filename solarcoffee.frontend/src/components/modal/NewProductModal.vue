@@ -8,24 +8,24 @@
           <input
             id="isTaxable"
             type="checkbox"
-            v-model="newProduct.IsTaxable"
+            v-model="newProduct.isTaxable"
           />
         </li>
         <li>
           <label for="productName">Name</label>
-          <input id="productName" type="text" v-model="newProduct.Name" />
+          <input id="productName" type="text" v-model="newProduct.name" />
         </li>
         <li>
           <label for="productDesc">Description</label>
           <input
             id="productDesc"
             type="text"
-            v-model="newProduct.Description"
+            v-model="newProduct.description"
           />
         </li>
         <li>
           <label for="productPrice">Price (USD)</label>
-          <input id="productPrice" type="text" v-model="newProduct.Price" />
+          <input id="productPrice" type="text" v-model="newProduct.price" />
         </li>
       </ul>
     </template>
@@ -55,14 +55,14 @@ import { Product } from "@/types/Product";
 })
 export default class NewProductModal extends Vue {
   newProduct: Product = {
-    Id: 0,
-    CreatedOn: new Date(),
-    UpdatedOn: new Date(),
-    Name: "",
-    Description: "",
-    Price: 0,
-    IsTaxable: false,
-    IsArchived: false
+    id: 0,
+    createdOn: new Date(),
+    updatedOn: new Date(),
+    name: "",
+    description: "",
+    price: 0,
+    isTaxable: false,
+    isArchived: false
   };
 
   close(event: Event) {

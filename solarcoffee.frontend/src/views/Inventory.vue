@@ -4,10 +4,10 @@
     <hr />
 
     <div class="inventory-actions">
-      <solar-button @click.native="showNewProductModal" id="addNewBtn"
+      <solar-button @button:click="showNewProductModal" id="addNewBtn"
         >Add New Item</solar-button
       >
-      <solar-button @click.native="showShipmentModal" id="receiveShipmentBtn"
+      <solar-button @button:click="showShipmentModal" id="receiveShipmentBtn"
         >Receive Shipment</solar-button
       >
     </div>
@@ -21,15 +21,22 @@
         <th>Delete</th>
       </tr>
 
-      <tr v-for="item in inventory" :key="item.Id">
-        <td>{{ item.Product.Name }}</td>
-        <td>{{ item.QuantityOnHand }}</td>
-        <td>{{ item.Product.Price | price }}</td>
+      <tr v-for="item in inventory" :key="item.id">
+        <td>{{ item.product.name }}</td>
+        <td :class="`${applyColor(item.quantityOnHand, item.idealQuantity)}`">
+          {{ item.quantityOnHand }}
+        </td>
+        <td>{{ item.product.price | price }}</td>
         <td>
-          <span v-if="item.Product.IsTaxable">Yes</span>
+          <span v-if="item.product.isTaxable">Yes</span>
           <span v-else>No</span>
         </td>
-        <td><div>X</div></td>
+        <td>
+          <i
+            @click="archiveProduct(item.product.id)"
+            class="lni lni-cross-circle product-archive"
+          ></i>
+        </td>
       </tr>
     </table>
 
@@ -53,7 +60,11 @@ import { Product, ProductInventory } from "@/types/Product";
 import { Shipment } from "@/types/Shipment";
 import SolarButton from "@/components/SolarButton.vue";
 import NewProductModal from "@/components/modal/NewProductModal.vue";
-import ShipmentModal from "@/components/modal/ShipmentModal";
+import { InventoryService, ProductService } from "@/services";
+import ShipmentModal from "@/components/modal/ShipmentModal.vue";
+
+const inventoryService = new InventoryService();
+const productService = new ProductService();
 
 @Component({
   name: "Inventory",
@@ -62,53 +73,66 @@ import ShipmentModal from "@/components/modal/ShipmentModal";
 export default class Inventory extends Vue {
   isNewProductVisible = false;
   isShipmentVisible = false;
-  inventory: ProductInventory[] = [
-    {
-      Id: 1,
-      Product: {
-        Id: 1,
-        CreatedOn: new Date(),
-        UpdatedOn: new Date(),
-        Name: "Some Product",
-        Description: "blabla",
-        Price: 500,
-        IsTaxable: true,
-        IsArchived: true
-      },
-      IdealQuantity: 5,
-      QuantityOnHand: 100
-    },
-    {
-      Id: 2,
-      Product: {
-        Id: 2,
-        CreatedOn: new Date(),
-        UpdatedOn: new Date(),
-        Name: "Another Product",
-        Description: "blabla",
-        Price: 300,
-        IsTaxable: false,
-        IsArchived: true
-      },
-      IdealQuantity: 5,
-      QuantityOnHand: 40
-    }
-  ];
+  inventory: ProductInventory[] = [];
+  public applyColor(current: number, target: number) {
+    return current <= 0
+      ? "red"
+      : Math.abs(target - current) > 8
+      ? "yellow"
+      : "green";
+  }
+  async archiveProduct(productId: number) {
+    await productService.archive(productId);
+    await this.initialize();
+  }
   public showNewProductModal(): void {
     this.isNewProductVisible = !this.isNewProductVisible;
   }
   public showShipmentModal() {
     this.isShipmentVisible = !this.isShipmentVisible;
   }
-  public saveNewProduct(product: Product) {
-    console.log(product);
-    return;
+  async saveNewProduct(product: Product) {
+    await productService.save(product);
+    this.isNewProductVisible = false;
+    await this.initialize();
   }
-  public saveNewShipment(shipment: Shipment) {
-    console.log(shipment);
-    return;
+  async saveNewShipment(shipment: Shipment) {
+    await inventoryService.updateInventoryQuantity(shipment);
+    this.isShipmentVisible = false;
+    await this.initialize();
+  }
+  async initialize() {
+    this.inventory = await inventoryService.getInventory();
+  }
+  async created() {
+    await this.initialize();
   }
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@import "src/scss/global.scss";
+
+.green {
+  font-weight: bold;
+  color: $solar-green;
+}
+.yellow {
+  font-weight: bold;
+  color: $solar-yellow;
+}
+.red {
+  font-width: bold;
+  color: $solar-red;
+}
+.inventory-actions {
+  display: flex;
+  margin-bottom: 0.8rem;
+}
+.product-archive {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: $solar-red;
+}
+</style>

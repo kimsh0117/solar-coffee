@@ -1,17 +1,17 @@
 export interface Product {
-  Id: number;
-  CreatedOn: Date;
-  UpdatedOn: Date;
-  Name: string;
-  Description: string;
-  Price: number;
-  IsTaxable: boolean;
-  IsArchived: boolean;
+  id: number;
+  createdOn: Date;
+  updatedOn: Date;
+  name: string;
+  description: string;
+  price: number;
+  isTaxable: boolean;
+  isArchived: boolean;
 }
 
 export interface ProductInventory {
-  Id: number;
-  QuantityOnHand: number;
-  IdealQuantity: number;
-  Product: IProduct;
+  id: number;
+  quantityOnHand: number;
+  idealQuantity: number;
+  product: Product;
 }

@@ -5,8 +5,8 @@
       <label for="product">Product Received:</label>
       <select id="product" class="shipmentItems" v-model="selectedProduct">
         <option disabled value="">Please select one</option>
-        <option v-for="item in inventory" :value="item" :key="item.Id">
-          {{ item.Product.Name }}
+        <option v-for="item in inventory" :value="item" :key="item.id">
+          {{ item.product.name }}
         </option>
       </select>
       <label for="qtyReceived">Quantity Received:</label>
@@ -28,10 +28,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import SolarButton from "@/components/SolarButton";
-import SolarModal from "@/components/modal/SolarModal";
-import { ProductInventory, Product } from "@/types/Product";
+import SolarButton from "@/components/SolarButton.vue";
+import SolarModal from "@/components/modal/SolarModal.vue";
 import { Shipment } from "@/types/Shipment";
+import { Product, ProductInventory } from "@/types/Product";
 
 @Component({
   name: "ShipmentModal",
@@ -42,20 +42,20 @@ export default class ShipmentModal extends Vue {
   inventory!: ProductInventory[];
 
   selectedProduct: Product = {
-    CreatedOn: new Date(),
-    UpdatedOn: new Date(),
-    Id: 0,
-    Description: "",
-    IsTaxable: false,
-    Name: "",
-    Price: 0,
-    IsArchived: false
+    createdOn: new Date(),
+    updatedOn: new Date(),
+    id: 0,
+    description: "",
+    isTaxable: false,
+    name: "",
+    price: 0,
+    isArchived: false
   };
 
   qtyReceived = 0;
   public save(event: Event) {
     const shipment: Shipment = {
-      productId: this.selectedProduct.Id,
+      productId: this.selectedProduct.id,
       adjustment: this.qtyReceived
     };
     this.$emit("save:shipment", shipment);
