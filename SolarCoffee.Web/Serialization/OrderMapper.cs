@@ -43,7 +43,7 @@ namespace SolarCoffee.Web.Serialization {
       }).ToList();
     }
     /// <summary>
-    /// Maps a collection of SalesOrderItems(data) to SalesORderItemModels (view models)
+    /// Maps a collection of SalesOrderItems(data) to SalesOrderItemModels (view models)
     /// </summary>
     /// <param name="orderItems"></param>
     /// <returns></returns>

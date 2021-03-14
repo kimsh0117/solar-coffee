@@ -253,7 +253,7 @@ export default class CreateInvoice extends Vue {
   }
   async submitInvoice() {
     this.invoice = {
-      customer: this.selectedCustomerId,
+      customerId: this.selectedCustomerId,
       lineItems: this.lineItems
     };
 
