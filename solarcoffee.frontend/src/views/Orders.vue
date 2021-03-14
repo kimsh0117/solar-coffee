@@ -23,7 +23,7 @@
           <td>
             <div
               v-if="!lineItem.isPaid"
-              class="lni lni-checkmark-circle order-complete"
+              class="lni lni-checkmark-circle green order-complete"
               @click="markComplete(lineItem.id)"
             ></div>
           </td>
@@ -70,4 +70,17 @@ export default class Orders extends Vue {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@import "src/scss/global.scss";
+.green {
+  font-weight: bold;
+  color: $solar-green;
+}
+.inventory-actions {
+  display: flex;
+  margin-bottom: 0.8rem;
+}
+.order-complete {
+  cursor: pointer;
+}
+</style>
