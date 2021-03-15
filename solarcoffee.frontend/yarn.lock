@@ -10847,7 +10847,7 @@
   "resolved" "https://registry.npmjs.org/vue-apexcharts/-/vue-apexcharts-1.6.0.tgz"
   "version" "1.6.0"
 
-"vue-class-component@*", "vue-class-component@^7.2.3":
+"vue-class-component@*", "vue-class-component@^7.2.3", "vue-class-component@^7.2.6":
   "integrity" "sha512-+eaQXVrAm/LldalI272PpDe3+i4mPis0ORiMYxF6Ae4hyuCh15W8Idet7wPUEs4N4YptgFHGys4UrgNQOMyO6w=="
   "resolved" "https://registry.npmjs.org/vue-class-component/-/vue-class-component-7.2.6.tgz"
   "version" "7.2.6"
@@ -10937,12 +10937,19 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@*", "vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.6.11", "vue@^2.x", "vue@2.x":
+"vue@*", "vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.5.19", "vue@^2.6.11", "vue@^2.x", "vue@2.x":
   "integrity" "sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-2.6.12.tgz"
   "version" "2.6.12"
 
-"vuex@^3.4.0":
+"vuex-pathify@^1.4.5":
+  "integrity" "sha512-i21nW9cEt3Qx3ieTk9lLxDfBkOEEB1nL9tQDRsSOkOYWZuJ+KiX/1RL+/Yb85EODsuKS9tHWJ5EHI5MImThmgg=="
+  "resolved" "https://registry.npmjs.org/vuex-pathify/-/vuex-pathify-1.4.5.tgz"
+  "version" "1.4.5"
+  dependencies:
+    "vue-class-component" "^7.2.6"
+
+"vuex@^3.0.1", "vuex@^3.4.0":
   "integrity" "sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw=="
   "resolved" "https://registry.npmjs.org/vuex/-/vuex-3.6.2.tgz"
   "version" "3.6.2"
